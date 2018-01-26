@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+    <!--
+  * Please see the included README.md file for license terms and conditions.
+  -->
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="media_button_bar/css/media_button_bar.css">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="jqm/jquery.mobile-min.css">
+        <title>INFRAsystem- Controle de estoque funcao baixa por funcionario</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+        <!--
+  * The "meta viewport" tag (below) helps your app size appropriately to a device's ideal viewport.
+  * Note that Windows device viewports work better when initialized using the @viewport CSS rule.
+  * For a quick overview of "meta viewport" and @viewport, see this article:
+  *   http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag
+  * To see how it works, try your app on a real device with and without a "meta viewport" tag.
+  * Additional useful references include:
+  *   http://www.quirksmode.org/mobile/viewports.html
+  *   http://www.quirksmode.org/mobile/metaviewport/devices.html
+  *   https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html
+-->
+
+        <!-- <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1"> -->
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1, maximum-scale=2"> -->
+
+        <style>
+            /* following three (cascaded) are equivalent to above three meta viewport statements */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html */
+            /* see http://dev.w3.org/csswg/css-device-adapt/ */
+                @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+                @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+                /*@-ms-viewport { user-zoom: zoom ; min-zoom: 100% ; max-zoom: 200% ; }   @viewport { user-zoom: zoom ; min-zoom: 100% ; max-zoom: 200% ; }*/
+        </style>
+
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
+
+        <!-- IMPORTANT: Do not include a weinre script tag as part of your release builds! -->
+        <!-- Place your remote debugging (weinre) script URL from the Test tab here, if it does not work below -->
+        <!-- <script src="http://debug-software.intel.com/target/target-script-min.js#insertabiglongfunkynumberfromthexdkstesttab"></script> -->
+
+        <!-- Recommended location for your JavaScript libraries -->
+        <!-- These library references (below) are just examples to give you the general idea... -->
+        <!-- <script src="lib/mc/hammer.js"></script> -->
+        <!-- <script src="lib/ft/fastclick.js"></script> -->
+
+        <!--
+  * cordova.js is a phantom lib for "Cordova HTML5 web app," it does nothing in a "Standard HTML5 web app"
+  * Seeing a "Failed to load resource: net::ERR_FILE_NOT_FOUND" message caused by this "cordova.js" script?
+  * The cordova.js script is required if you convert your "Standard HTML5" project into a "Cordova" project.
+  * You can safely ignore the error or comment out this line if you will not be developing a Cordova app.
+-->
+        <script src="cordova.js" id="xdkJScordova_"></script>
+
+        <script src="js/app.js"></script>
+        <!-- for your event code, see README and file comments for details -->
+        <script src="js/init-app.js"></script>
+        <!-- for your init code, see README and file comments for details -->
+        <script src="xdk/init-dev.js"></script>
+        <!-- normalizes device and document ready events, see file for details -->
+        <script type="application/javascript" src="lib/jquery.min.js"></script>
+        <script type="application/javascript" src="jqm/jquery.mobile-min.js" data-ver="0"></script>
+        <!--<script type="application/javascript" src="js/index_user_scripts.js"></script>-->
+        <script type="application/javascript" src="xdk/ad/jqm_subpage.js"></script>
+
+        <!--<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css"> 
+        <script src="js/jquery-2.1.1.min.js"></script>
+        <script src="js/jquery.mobile-1.4.5.min.js"></script>-->
+        <script src="js/funcao.js"></script>
+
+        <script type="application/javascript" src="js/index_user_scripts.js"></script>
+    </head>
+    <!----------------------------------------------------------------------------------------------------------------------------------------------->
+
+    <body>
+        <!-- IMPORTANT: Do not include a weinre script tag as part of your release builds! -->
+        <!-- Place your remote debugging (weinre) script URL from the Test tab here, if it does not work above -->
+        <!-- <script src="http://debug-software.intel.com/target/target-script-min.js#insertabiglongfunkynumberfromthexdkstesttab"></script> -->
+        <div class="upage" id="mainpage" data-role="page">
+            <div class="upage-outer">
+                <div data-role="header" class="container-group inner-element uib_w_2" data-uib="jquery_mobile/header" data-ver="0" data-position="fixed" id="danieltel" data-theme="a">
+                    <h1>SPEEDLINE Telecomunicações</h1>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+                <div class="upage-content ac0 content-area vertical-col left" id="page_30_94">
+                    <div class="grid grid-pad urow uib_row_1 row-height-1" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_1 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+
+                                <div class="widget uib_w_5 scale-image d-margins" data-uib="media/img" data-ver="0">
+                                    <figure class="figure-align">
+                                        <img src="images/speedline_logo2.jpg" id="logospeedline">
+
+                                        <figcaption data-position="bottom"></figcaption>
+                                    </figure>
+                                </div><span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+
+                    <div class="grid grid-pad urow uib_row_2 row-height-2" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_2 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+
+                                <div class="grid grid-pad urow uib_row_6 row-height-6" data-uib="layout/row" data-ver="0">
+                                    <div class="col uib_col_6 col-1_12-12" data-uib="layout/col" data-ver="0">
+                                        <div class="widget-container content-area vertical-col">
+
+                                            <div class="table-thing with-label widget uib_w_11 d-margins" data-uib="jquery_mobile/input" data-ver="0">
+                                                <label class="narrow-control label-inline" for="login">Login</label>
+                                                <!-- <input class="wide-control" placeholder="Login" type="text" name="login" id="login" autofocus=""> -->
+                                                <input class="wide-control" placeholder="Login" type="text" name="login" id="login" autofocus="">
+                                            </div>
+                                            <div class="table-thing with-label widget uib_w_12 d-margins" data-uib="jquery_mobile/input" data-ver="0">
+                                                <label class="narrow-control label-inline" for="senha">Senha</label>
+                                                <input class="wide-control" type="password" placeholder="Senha" name="senha" id="senha">
+                                            </div><span class="uib_shim"></span>
+                                        </div>
+                                    </div>
+                                    <span class="uib_shim"></span>
+                                </div>
+                                <span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+
+                    <div class="grid grid-pad urow uib_row_3 row-height-3" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_3 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+
+                                <a class="widget uib_w_4 d-margins" data-uib="jquery_mobile/button" data-ver="0" data-role="button" data-theme="a" id="entrar" data-transition="slideup">Entrar</a><a class="widget uib_w_17 d-margins" data-uib="jquery_mobile/button"
+                                href="javascript:window.close()" data-ver="0" data-role="button" data-theme="a" id="sairtudo">Sair</a><span class="uib_shim"></span>
+
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+                </div>
+
+                <div data-role="footer" data-position="fixed" class="container-group inner-element uib_w_3" data-uib="jquery_mobile/footer" data-ver="0" data-theme="a" id="infrasystem">
+                    <h1>INFRAsystem</h1>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <div class="upage" id="pagina2" data-role="page">
+            <div class="upage-outer">
+                <div data-role="header" class="container-group inner-element uib_w_1" data-uib="jquery_mobile/header" data-ver="0" data-position="fixed" id="danieltel2" data-theme="a">
+                    <a href="#page_30_94" data-rel="back" class="ui-btn-left ui-btn  ui-btn-icon-notext ui-corner-all ui-icon-back">Voltar</a> 
+                    <h1>SPEEDLINE Telecomunicações</h1>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+                <div class="upage-content ac0 content-area vertical-col left" id="page_31_5">
+                    <div class="grid grid-pad urow uib_row_4 row-height-4" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_4 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+
+                                <a class="uib-graphic-button default-graphic-sizing default-image-sizing hover-graphic-button active-graphic-button default-graphic-button default-graphic-text widget uib_w_9 d-margins media-button-text-bottom" data-uib="media/graphic_button" data-ver="0"
+                                id="darbaixa" href="#paginapredarbaixa">
+                                    <img src="images/menos.jpg">
+                                    <span class="uib-caption">Dar baixa</span>
+                                </a><span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+
+                    <div class="grid grid-pad urow uib_row_5 row-height-5" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_5 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+
+                                <a class="uib-graphic-button default-graphic-sizing default-image-sizing hover-graphic-button active-graphic-button default-graphic-button default-graphic-text widget uib_w_10 d-margins media-button-text-bottom" data-uib="media/graphic_button" data-ver="0"
+                                id="versaldo">
+                                    <img src="images/procurar.jpg">
+                                    <span class="uib-caption">Ver saldo</span>
+                                </a><span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+                </div>
+                <div data-role="footer" data-position="fixed" class="container-group inner-element uib_w_8" data-uib="jquery_mobile/footer" data-ver="0" id="infrasystem2" data-theme="a">
+                    <h1>INFRAsystem</h1>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <div class="upage" id="paginaversaldo" data-role="page">
+            <div class="upage-outer">
+                <div data-role="header" class="container-group inner-element uib_w_1" data-uib="jquery_mobile/header" data-ver="0" data-position="fixed" id="danieltel2" data-theme="a">
+                    <a href="#page_30_94" data-rel="back" class="ui-btn-left ui-btn  ui-btn-icon-notext ui-corner-all ui-icon-back">Voltar</a> 
+                    <h1>SPEEDLINE Telecomunicações</h1>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+                <div class="upage-content ac0 content-area vertical-col left" id="page_31_5">
+
+                    <p id="listagemsaldo"></p>
+
+                    <div class="grid grid-pad urow uib_row_7 row-height-7" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_7 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+
+                                <span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+
+                </div>
+                <div data-role="footer" data-position="fixed" class="container-group inner-element uib_w_8" data-uib="jquery_mobile/footer" data-ver="0" id="infrasystem2" data-theme="a">
+                    <h1>INFRAsystem</h1>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <div class="upage" id="paginadarbaixa" data-role="page">
+            <div class="upage-outer">
+                <div data-role="header" class="container-group inner-element uib_w_1" data-uib="jquery_mobile/header" data-ver="0" data-position="fixed" id="danieltel2" data-theme="a">
+                    <a href="#page_30_94" data-rel="back" class="ui-btn-left ui-btn  ui-btn-icon-notext ui-corner-all ui-icon-back">Voltar</a> 
+                    <h1>SPEEDLINE Telecomunicações</h1>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+                <div class="upage-content ac0 content-area vertical-col left" id="page_31_5">
+
+                    <p id="vaidarbaixa"></p>
+
+                    <div class="grid grid-pad urow uib_row_8 row-height-8" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_8 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+
+                                <div class="table-thing with-label widget uib_w_13 d-margins" data-uib="jquery_mobile/input" data-ver="0">
+                                    <label class="narrow-control label-inline" for="numerodaos">Numero da O.S</label>
+                                    <input class="wide-control" placeholder="Numero da O.S." type="text" name="numerodaos" id="numerodaos" autofocus="">
+                                </div><span class="uib_shim"></span>
+
+                                <div class="table-thing with-label widget uib_w_13 d-margins" data-uib="jquery_mobile/input" data-ver="0">
+                                    <label class="narrow-control label-inline" for="idabaixar">ID</label>
+                                    <input class="wide-control" placeholder="ID do produto a  BAIXAR" type="text" name="idabaixar" id="idabaixar">
+                                </div><span class="uib_shim"></span>
+
+                                <div class="table-thing with-label widget uib_w_13 d-margins" data-uib="jquery_mobile/input" data-ver="0">
+                                    <label class="narrow-control label-inline" for="qtdabaixar">Quantidade</label>
+                                    <input class="wide-control" placeholder="Quant. a BAIXAR" type="text" name="qtdabaixar" id="qtdabaixar">
+                                </div><span class="uib_shim"></span>
+
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+
+                    <div class="grid grid-pad urow uib_row_9 row-height-9" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_9 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+
+                                <div class="grid grid-pad urow uib_row_10 row-height-10" data-uib="layout/row" data-ver="0">
+                                    <div class="col uib_col_10 col-1_12-12" data-uib="layout/col" data-ver="0">
+                                        <div class="widget-container content-area vertical-col">
+                                            <a class="widget uib_w_14 d-margins" data-uib="jquery_mobile/button" data-ver="0" data-role="button" id="gerardarbaixa" data-theme="a">Dar baixa</a><span class="uib_shim"></span>
+                                        </div>
+                                    </div>
+                                    <span class="uib_shim"></span>
+                                </div>
+                                <span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+                </div>
+                <div data-role="footer" data-position="fixed" class="container-group inner-element uib_w_8" data-uib="jquery_mobile/footer" data-ver="0" id="infrasystem2" data-theme="a">
+                    <h1>INFRAsystem</h1>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <div class="upage" id="paginaresultado" data-role="page">
+            <div class="upage-outer">
+                <div data-role="header" class="container-group inner-element uib_w_1" data-uib="jquery_mobile/header" data-ver="0" data-position="fixed" id="danieltel2" data-theme="a">
+                    <a href="#page_30_94" data-rel="back" class="ui-btn-left ui-btn  ui-btn-icon-notext ui-corner-all ui-icon-back">Voltar</a> 
+                    <h1>SPEEDLINE Telecomunicações</h1>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+                <div class="upage-content ac0 content-area vertical-col left" id="page_31_5">
+
+                    <p id="listarresultado"></p>
+
+                    <div class="grid grid-pad urow uib_row_7 row-height-7" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_7 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+
+                                <span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+
+                    <!--                    <a class="widget uib_w_16 d-margins" href="#mainpage" data-uib="jquery_mobile/button" data-ver="0" data-role="button" id="sairgeral" data-theme="a">Sair</a>
+-->
+                    <a class="widget uib_w_16 d-margins" href="javascript:window.close()" data-uib="jquery_mobile/button" data-ver="0" data-role="button" id="sairgeral" data-theme="a">Sair</a>
+
+                </div>
+                <div data-role="footer" data-position="fixed" class="container-group inner-element uib_w_8" data-uib="jquery_mobile/footer" data-ver="0" id="infrasystem2" data-theme="a">
+                    <h1>INFRAsystem</h1>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+</html>
